@@ -12,7 +12,7 @@ type Interview struct {
 	Type 	    string         `json:"type"` 
 	StartTime   time.Time      `json:"start_time"`
 	EndTime     time.Time      `json:"end_time"`
-	RoomID	  string           `json:"room_id"`  //LiveKit Room ID
+	RoomID	    string         `json:"room_id"`  //LiveKit Room ID
 	AudioURL    string         `json:"audio_url"` //Recorded Interview audio
 	Transcript  string         `json:"transcript"`  // interview transcript
 	Evaluation   string        `json:"evaluation"`   // AI Evaluation
