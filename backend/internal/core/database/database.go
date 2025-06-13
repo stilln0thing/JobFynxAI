@@ -16,7 +16,7 @@ func InitDB(host, port, user, password, dbname string) error{
     
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil{
-		return fmt.Errorf("Failed to connect to the db: %v", err)
+		return fmt.Errorf("failed to connect to the db: %v", err)
 	}
 
 	err = db.AutoMigrate(
@@ -25,9 +25,13 @@ func InitDB(host, port, user, password, dbname string) error{
 		&models.Resume{},
 	)
 	if err != nil{
-		return fmt.Errorf("Failed to migrate database: %v",err)
+		return fmt.Errorf("failed to migrate database: %v",err)
 	}
 	DB = db
 	log.Println("Database connected successfully")
 	return nil
+}
+
+func GetDB() *gorm.DB {
+	return DB
 }

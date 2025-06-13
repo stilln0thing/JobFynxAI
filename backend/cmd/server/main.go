@@ -5,6 +5,7 @@ import(
 	"github.com/gin-gonic/gin"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/config"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/database"
+	
 )
 
 func main(){
@@ -25,6 +26,8 @@ func main(){
 	if err != nil{
 		log.Fatal("Failed to initialise database:", err)
 	}
+
+
 	router := gin.Default()
 
 	router.GET("/health",func(c *gin.Context){
