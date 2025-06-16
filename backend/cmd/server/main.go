@@ -1,11 +1,12 @@
 package main
 
-import(
+import (
 	"log"
 	"github.com/gin-gonic/gin"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/config"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/database"
-	
+	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
+	"github.com/stilln0thing/JobFynxAI/backend/internal/services"
 )
 
 func main(){
@@ -26,7 +27,10 @@ func main(){
 	if err != nil{
 		log.Fatal("Failed to initialise database:", err)
 	}
+	repos := repository.NewRepositoryFactory()
 
+	services := service.NewServiceFactory(repos)
+    
 
 	router := gin.Default()
 
