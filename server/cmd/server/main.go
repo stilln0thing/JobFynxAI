@@ -2,11 +2,12 @@ package main
 
 import (
 	"log"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/config"
 	"github.com/stilln0thing/JobFynxAI/backend/internal/core/database"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/services"
+	"github.com/stilln0thing/JobFynxAI/backend/internal/repository" 
+	"github.com/stilln0thing/JobFynxAI/backend/internal/services"   
 )
 
 func main(){
@@ -31,7 +32,7 @@ func main(){
 
 	services := service.NewServiceFactory(repos)
     
-
+	fmt.Println(services)
 	router := gin.Default()
 
 	router.GET("/health",func(c *gin.Context){
@@ -45,3 +46,4 @@ func main(){
 		log.Fatal("Failed to start server:", err)
 	}
 }
+
