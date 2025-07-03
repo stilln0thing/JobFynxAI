@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository"
 	"golang.org/x/crypto/bcrypt"
 )
 

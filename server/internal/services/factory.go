@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository"
 )
 
 type ServiceFactory struct {

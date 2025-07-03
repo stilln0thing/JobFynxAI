@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository"
 )
 
 type resumeService struct {

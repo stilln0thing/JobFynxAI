@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 )
 
 type UserRepository interface {
