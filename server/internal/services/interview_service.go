@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"time"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository"
+	
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository"
 )
 
 type interviewService struct {
@@ -18,17 +18,17 @@ func NewInterviewService(interviewRepo repository.InterviewRepository) Interview
 	}
 }
 
-func (s *interviewService) ScheduleInterview(ctx context.Context, interview *models.Interview) error {
-	// Validate interview time 
-	if interview.StartTime.Before(time.Now()){
-		return errors.New("interview cannot be scheduled in the past")
-	}
+// func (s *interviewService) ScheduleInterview(ctx context.Context, interview *models.Interview) error {
+// 	// Validate interview time 
+// 	if interview.StartTime.Before(time.Now()){
+// 		return errors.New("interview cannot be scheduled in the past")
+// 	}
 
-	//set initial status
-	interview.Status = "scheduled"
+// 	//set initial status
+// 	interview.Status = "scheduled"
 	
-	return s.interviewRepo.Create(ctx, interview)
-}
+// 	return s.interviewRepo.Create(ctx, interview)
+// }
 
 func (s *interviewService) StartInterview(ctx context.Context, interviewID uint) error {
 	interview, err := s.interviewRepo.GetByID(ctx, interviewID)
@@ -39,7 +39,7 @@ func (s *interviewService) StartInterview(ctx context.Context, interviewID uint)
 		return errors.New("interview cannot be started")
 	}
 	interview.Status = "in_progress"
-	interview.StartTime = time.Now()
+	// interview.StartTime = time.Now()
 
 	return s.interviewRepo.Update(ctx, interview)
 }
@@ -55,7 +55,7 @@ func (s *interviewService) EndInterview(ctx context.Context, interviewID uint) e
     }
 
     interview.Status = "completed"
-    interview.EndTime = time.Now()
+    // interview.EndTime = time.Now()
     
     return s.interviewRepo.Update(ctx, interview)
 }

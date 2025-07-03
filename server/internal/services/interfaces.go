@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 )
 
 type UserService interface{
@@ -13,7 +13,7 @@ type UserService interface{
 }
 
 type InterviewService interface {
-	ScheduleInterview(ctx context.Context, interview *models.Interview) error
+
 	StartInterview(ctx context.Context, interviewID uint) error
 	EndInterview(ctx context.Context, interviewID uint) error
 	GetInterview(ctx context.Context, interviewID uint) (*models.Interview,error)

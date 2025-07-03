@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/core/database"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/database"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 	"gorm.io/gorm"
 )
 

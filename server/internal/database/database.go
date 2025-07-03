@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/models"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

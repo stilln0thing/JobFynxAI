@@ -4,15 +4,15 @@ import (
 	"log"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/core/config"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/core/database"
-	"github.com/stilln0thing/JobFynxAI/backend/internal/repository" 
-	"github.com/stilln0thing/JobFynxAI/backend/internal/services"   
+	"github.com/stilln0thing/JobFynxAI/server/internal/core"
+	"github.com/stilln0thing/JobFynxAI/server/internal/database"
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository" 
+	"github.com/stilln0thing/JobFynxAI/server/internal/services"   
 )
 
 func main(){
 	//Load config
-	cfg,err := config.LoadConfig()
+	cfg,err := core.LoadConfig()
 	if err != nil{
 		log.Fatal("Failed to load config:", err)
 	}
