@@ -14,11 +14,13 @@ func InitDB(host, port, user, password, dbname string) error{
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname =%s sslmode = disable",
     host, port, user, password, dbname)
     
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	Db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil{
 		return fmt.Errorf("failed to connect to the db: %v", err)
 	}
-
+	db := Db.Session(&gorm.Session{
+    	PrepareStmt: true,
+  	})
 	err = db.AutoMigrate(
 		&models.User{},
 		&models.Interview{},
