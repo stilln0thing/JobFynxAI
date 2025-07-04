@@ -6,7 +6,7 @@ import (
 
 type Interview struct {
 	ID            uint                 `gorm:"primaryKey" json:"id"`
-	UserID	      uint                 `gorm:"not null" json:"user_id"`
+	UserID	      string               `gorm:"not null" json:"user_id"`
 	UserName      string               `json:"userName"`
 	Status        string               `gorm:"default:'scheduled'" json:"status"` 
 	ResumePath    string               `json:"resumePath"`
