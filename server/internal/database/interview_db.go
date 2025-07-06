@@ -16,7 +16,7 @@ func NewInterviewRepository() *interviewRepository {
 	}
 }
 
-func (r *interviewRepository) CreateInterview(id uint, username string, resumePath string) (*models.Interview, error) {
+func (r *interviewRepository) CreateInterview(id string, username string, resumePath string) (*models.Interview, error) {
 	query:= `INSERT INTO INTERVIEW(INTERVIEW ID, USER_ID, USERNAME, CREATED_AT, STATUS, RESUME_PATH) VALUES($1, $2, $3, $5, $6)`
 	interview := &models.Interview{
 		ID: 		id,
