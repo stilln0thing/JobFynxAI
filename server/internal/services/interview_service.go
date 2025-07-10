@@ -5,7 +5,7 @@ import (
 	"image/png"
 	"log/slog"
 	"os"
-	"path/filePath"
+	"path/filepath"
 	"strings"
 	"github.com/gen2brain/go-fitz"
 	"github.com/google/uuid"
@@ -112,7 +112,7 @@ func (i *InterviewService) convertToImages(interviewId string, filePath string, 
 		}
 
 		imageName := fmt.Sprintf("page_%d.png", index+1)
-		outputFilePath := filePath.join(outputDir, imageName)
+		outputFilePath := filepath.Join(outputDir, imageName)
 		outFile, err := os.Create(outputFilePath)
 		if err != nil {
 			return nil, err

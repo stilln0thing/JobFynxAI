@@ -64,3 +64,65 @@ Return a single JSON object with:
   "feedback": "<4-5 sentence summary>"
 }
 `
+
+type EvaluationService struct {
+  Client              openai.Client
+  Model               string
+  EvaluationSchema    interface{}
+}
+
+func NewEvaluationService(apiKey string, modelName string) *EvaluationService {
+  client := openai.NewClient(option.WithAPIKey(apiKey))
+  evaluationSchema := core.GenerateSchema[models.Evaluation]()
+  return &EvaluationService{Client: client, Model: modelName, EvaluationSchema: evaluationSchema}
+}
+
+func (e *EvaluationService) EvaluateInterview(interview *models.Interview) (*models.Evaluation, error) {
+  if interview.ResumeSummary == nil || interview.Transcript == nil {
+    return nil, errors.New("Both resume summary and transcript are required to evaluate interview : " + interview.ID)
+  }
+  role := "Role = Software Engineer"
+  resumeBytes, err := json.Marshal(interview.ResumeSummary)
+  if err != nil {
+    return nil, err
+  }
+  transcriptBytes, err := json.Marshal(interview.Transcript)
+  if err != nil {
+    return nil, err
+  }
+  userMessage := role + string(resumeBytes) + string(transcriptBytes)
+
+  schemaParam := openai.ResponseFormatJSONSchemaJSONSchemaParam{
+    Name :      "resume",
+    Description: openai.String("Evaluation of the interview"),
+		Schema:      e.EvaluationSchema,
+		Strict:      openai.Bool(true),
+  }
+  slog.Info("Evaluating interview...")
+	params := openai.ChatCompletionNewParams{
+		Model: e.Model,
+		Messages: []openai.ChatCompletionMessageParamUnion{
+			openai.SystemMessage(EVALUATION_SYSTEM_PROMPT),
+			openai.UserMessage(userMessage),
+		},
+		ResponseFormat: openai.ChatCompletionNewParamsResponseFormatUnion{
+			OfJSONSchema: &openai.ResponseFormatJSONSchemaParam{
+				JSONSchema: schemaParam,
+			},
+		},
+	}
+	chatCompletion, err := e.Client.Chat.Completions.New(context.TODO(), params)
+	if err != nil {
+		return nil, err
+	}
+
+	evaluationString := chatCompletion.Choices[0].Message.Content
+	slog.Info("Evaluation complete. Converion to object pending.")
+	var evaluation models.Evaluation
+	err = json.Unmarshal([]byte(evaluationString), &evaluation)
+	if err != nil {
+		return nil, err
+	}
+	return &evaluation, nil
+}
+
