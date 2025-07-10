@@ -1,14 +1,15 @@
-package services 
+package services
 
 import (
 	"context"
 	"encoding/json"
 	"errors"
 	"log/slog"
-	"github.com/stilln0thing/JobFynxAI/server/internal/models"
-	"github.com/stilln0thing/JobFynxAI/server/internal/core"
+
 	"github.com/openai/openai-go"
 	"github.com/openai/openai-go/option"
+	"github.com/stilln0thing/JobFynxAI/server/internal/core"
+	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 )
 
 const EVALUATION_SYSTEM_PROMPT = `You are an AI assistant whose sole purpose is to evaluate a candidate's interview performance for a given role. You will be provided:
@@ -66,39 +67,39 @@ Return a single JSON object with:
 `
 
 type EvaluationService struct {
-  Client              openai.Client
-  Model               string
-  EvaluationSchema    interface{}
+	Client           openai.Client
+	Model            string
+	EvaluationSchema interface{}
 }
 
 func NewEvaluationService(apiKey string, modelName string) *EvaluationService {
-  client := openai.NewClient(option.WithAPIKey(apiKey))
-  evaluationSchema := core.GenerateSchema[models.Evaluation]()
-  return &EvaluationService{Client: client, Model: modelName, EvaluationSchema: evaluationSchema}
+	client := openai.NewClient(option.WithAPIKey(apiKey))
+	evaluationSchema := core.GenerateSchema[models.Evaluation]()
+	return &EvaluationService{Client: client, Model: modelName, EvaluationSchema: evaluationSchema}
 }
 
 func (e *EvaluationService) EvaluateInterview(interview *models.Interview) (*models.Evaluation, error) {
-  if interview.ResumeSummary == nil || interview.Transcript == nil {
-    return nil, errors.New("Both resume summary and transcript are required to evaluate interview : " + interview.ID)
-  }
-  role := "Role = Software Engineer"
-  resumeBytes, err := json.Marshal(interview.ResumeSummary)
-  if err != nil {
-    return nil, err
-  }
-  transcriptBytes, err := json.Marshal(interview.Transcript)
-  if err != nil {
-    return nil, err
-  }
-  userMessage := role + string(resumeBytes) + string(transcriptBytes)
+	if interview.ResumeSummary == nil || interview.Transcript == nil {
+		return nil, errors.New("Both resume summary and transcript are required to evaluate interview : " + interview.ID)
+	}
+	role := "Role = Software Engineer"
+	resumeBytes, err := json.Marshal(interview.ResumeSummary)
+	if err != nil {
+		return nil, err
+	}
+	transcriptBytes, err := json.Marshal(interview.Transcript)
+	if err != nil {
+		return nil, err
+	}
+	userMessage := role + string(resumeBytes) + string(transcriptBytes)
 
-  schemaParam := openai.ResponseFormatJSONSchemaJSONSchemaParam{
-    Name :      "resume",
-    Description: openai.String("Evaluation of the interview"),
+	schemaParam := openai.ResponseFormatJSONSchemaJSONSchemaParam{
+		Name:        "resume",
+		Description: openai.String("Evaluation of the interview"),
 		Schema:      e.EvaluationSchema,
 		Strict:      openai.Bool(true),
-  }
-  slog.Info("Evaluating interview...")
+	}
+	slog.Info("Evaluating interview...")
 	params := openai.ChatCompletionNewParams{
 		Model: e.Model,
 		Messages: []openai.ChatCompletionMessageParamUnion{
@@ -115,7 +116,6 @@ func (e *EvaluationService) EvaluateInterview(interview *models.Interview) (*mod
 	if err != nil {
 		return nil, err
 	}
-
 	evaluationString := chatCompletion.Choices[0].Message.Content
 	slog.Info("Evaluation complete. Converion to object pending.")
 	var evaluation models.Evaluation
@@ -126,3 +126,4 @@ func (e *EvaluationService) EvaluateInterview(interview *models.Interview) (*mod
 	return &evaluation, nil
 }
 
+// this is the evalauation service
