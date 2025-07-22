@@ -40,16 +40,16 @@ func (i *InterviewService) Register(name string, fileName string, filePath strin
 	if err != nil {
 		return nil, err
 	}
-
-	resumeSummary, err := i.ResumeService.GetSummary(fileName, filePath)
-	if err != nil {
-		return nil, err
-	}
-	// some error maybe here --- debug here
-	err = i.InterviewRepository.UpdateEvaluation(interviewId, resumeSummary)
-	if err != nil {
-		return nil, err
-	}
+    // Will need to debug here for now I am not getting any point of creating a summary
+	// resumeSummary, err := i.ResumeService.GetSummary(fileName, filePath)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// // some error maybe here --- debug here
+	// err = i.InterviewRepository.UpdateEvaluation(interviewId, resumeSummary)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	i.deleteImages(imagePaths)
 
 	return interview,nil

@@ -11,7 +11,7 @@ type Interview struct {
 	Status        string               `gorm:"default:'scheduled'" json:"status"` 
 	ResumePath    string               `json:"resumePath"`
 	ResumeSummary *Resume              `json:"resumeSummary"`
-	// Questions  *[]QuestionPrep      `json:"questions"`
+	Questions  	  *[]QuestionPrep      `json:"questions"`
 	Transcript    *[]TranscriptMessage `json:"transcript"`  // interview transcript
 	Evaluation    *Evaluation          `json:"evaluation"`   // AI Evaluation
 	CreatedAt     time.Time            `json:"created_at"`	

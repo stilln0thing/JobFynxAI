@@ -17,7 +17,7 @@ import(
 )
 
 const RESUME_SYSTEM_PROMPT = `You are an AI assistant whose sole purpose is to prepare, in JSON only (no extra text or formatting), both:
-A concise resume summary for a Senior Software Engineer candidate, divided into:
+A concise resume summary for a Software Engineer candidate, divided into:
 Candidate Details: name and total industry experience
 Top 5 Technologies: ranked by relevance to this role
 

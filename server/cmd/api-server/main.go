@@ -28,11 +28,9 @@ func main(){
 	if err != nil{
 		log.Fatal("Failed to initialise database:", err)
 	}
-	repos := repository.NewRepositoryFactory()
-
-	services := service.NewServiceFactory(repos)
+	
     
-	fmt.Println(services)
+	
 	router := gin.Default()
 
 	router.GET("/health",func(c *gin.Context){
