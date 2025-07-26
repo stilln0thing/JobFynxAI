@@ -2,14 +2,26 @@ package router
 
 import(
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+	"github.com/stilln0thing/JobFynxAI/server/internal/controller"
+
 )
 
-func SetupRoutes(router *gin.Engine){
-	v1 := router.Group("/api/v1") 
-	v1.GET("/health", func(c *gin.Context){
-		c.JSON(200, gin.H{
-			"status":  "ok",
-		})
-	})
-	
+func New(connectionController *controller.ConnectionController,
+	uploadController *controller.UploadController,
+	userController *controller.UserController, interviewController *controller.InterviewController) *gin.Engine {
+	gin.SetMode(gin.DebugMode)
+	router := gin.Default()
+	router.Use(cors.Default())
+	router.POST("/api/login", userController.Login())
+	router.POST("/api/connect", connectionController.Connect())
+	router.POST("/api/disconnect", connectionController.Disconnect())
+	router.POST("/api/upload", uploadController.SaveFile())
+	router.DELETE("/api/delete", uploadController.DeleteFile())
+	router.POST("/api/interviews", interviewController.Register())
+	router.GET("/api/interviews", interviewController.GetAllInterviews())
+	router.GET("/api/interviews/:id", interviewController.GetInterview())
+	router.GET("/api/interviews/evaluate/:id", interviewController.EvaluateInterview())
+    return router
 }
+	

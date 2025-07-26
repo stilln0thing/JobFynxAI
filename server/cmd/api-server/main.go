@@ -1,13 +1,17 @@
 package main
 
 import (
-	"log"
+	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"log/slog"
+	"net/http"
+	"os"
+
+	"github.com/stilln0thing/JobFynxAI/server/internal/controller"
 	"github.com/stilln0thing/JobFynxAI/server/internal/core"
-	"github.com/stilln0thing/JobFynxAI/server/internal/database"
-	"github.com/stilln0thing/JobFynxAI/server/internal/repository" 
-	"github.com/stilln0thing/JobFynxAI/server/internal/services"   
+	"github.com/stilln0thing/JobFynxAI/server/internal/repository"
+	router "github.com/stilln0thing/JobFynxAI/server/internal/routes"
+	"github.com/stilln0thing/JobFynxAI/server/internal/services"
 )
 
 func main(){
@@ -31,14 +35,6 @@ func main(){
 	
     
 	
-	router := gin.Default()
-
-	router.GET("/health",func(c *gin.Context){
-		c.JSON(200,gin.H{
-			"status": "ok",
-			"message": "Server is running",
-		})
-	})
 
 	if err := router.Run(":"+cfg.Server.Port); err !=nil{
 		log.Fatal("Failed to start server:", err)
