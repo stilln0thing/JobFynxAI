@@ -79,7 +79,7 @@ func NewEvaluationService(apiKey string, modelName string) *EvaluationService {
 }
 
 func (e *EvaluationService) EvaluateInterview(interview *models.Interview) (*models.Evaluation, error) {
-	if interview.ResumeSummary == nil || interview.Transcript == nil {
+	if &interview.ResumeSummary == nil || interview.Transcript == nil {
 		return nil, errors.New("Both resume summary and transcript are required to evaluate interview : " + interview.ID)
 	}
 	role := "Role = Software Engineer"

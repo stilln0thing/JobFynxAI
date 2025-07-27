@@ -24,7 +24,7 @@ func InitDB(host, port, user, password, dbname string) error{
 	err = db.AutoMigrate(
 		&models.User{},
 		&models.Interview{},
-		&models.Resume{},
+		// &models.Resume{},
 	)
 	if err != nil{
 		return fmt.Errorf("failed to migrate database: %v",err)

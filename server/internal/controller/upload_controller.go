@@ -4,7 +4,7 @@ import(
 	"net/http"
 	"os"
 	"path/filepath"
-
+	"log/slog"
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,6 +50,7 @@ func (this *UploadController) SaveFile() gin.HandlerFunc {
 func (this *UploadController) DeleteFile() gin.HandlerFunc {
 	return func(c *gin.Context){
 		fileName := c.Query("fileName")
+		slog.Info(fileName)
 		if filepath.Ext(fileName) != ".pdf"{
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Only PDF files can be deleted"})
 			return

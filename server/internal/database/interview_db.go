@@ -42,7 +42,7 @@ func (r *interviewRepository) GetAllInterviews() ([]*models.Interview, error){
 	return interviews,nil
 }
 
-func (r *interviewRepository) GetInterview(id uint) (*models.Interview, error){
+func (r *interviewRepository) GetInterview(id string) (*models.Interview, error){
 	query := `SELECT INTERVIEW_ID, USERNAME, DATE_TRUNC('second', CREATED_AT::timestamp), STATUS, RESUME_PATH, RESUME_SUMMARY, TRANSCRIPT, EVALUATION FROM INTERVIEW WHERE INTERVIEW_ID=$1`
 	var interview models.Interview
 	if err := r.db.Raw(query,id).Scan(&interview).Error; err != nil {
@@ -51,7 +51,7 @@ func (r *interviewRepository) GetInterview(id uint) (*models.Interview, error){
 	return &interview,nil
 }
 
-func(r *interviewRepository) UpdateEvaluation(id uint, evaluation *models.Evaluation) error {
+func(r *interviewRepository) UpdateEvaluation(id string, evaluation *models.Evaluation) error {
   tx := r.db.
   Model(&models.Interview{}).
   Where("interview_id = ?", id).

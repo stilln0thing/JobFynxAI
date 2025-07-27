@@ -5,7 +5,6 @@ go 1.24.2
 toolchain go1.24.4
 
 require (
-	github.com/gen2brain/go-fitz v1.24.15
 	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.10.1
 	github.com/google/uuid v1.6.0
@@ -69,6 +68,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/jupiterrider/ffi v0.5.0 // indirect
 	github.com/jxskiss/base62 v1.1.0 // indirect

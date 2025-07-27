@@ -10,10 +10,10 @@ type Interview struct {
 	UserName      string               `json:"userName"`
 	Status        string               `gorm:"default:'scheduled'" json:"status"` 
 	ResumePath    string               `json:"resumePath"`
-	ResumeSummary *Resume              `json:"resumeSummary"`
-	Questions  	  *[]QuestionPrep      `json:"questions"`
-	Transcript    *[]TranscriptMessage `json:"transcript"`  // interview transcript
-	Evaluation    *Evaluation          `json:"evaluation"`   // AI Evaluation
+	ResumeSummary Resume              `json:"resumeSummary"`
+	Questions  	  []QuestionPrep      `gorm:"-" json:"questions"`
+	Transcript    []TranscriptMessage `gorm:"-" json:"transcript"`  // interview transcript
+	Evaluation    Evaluation          `json:"evaluation"`   // AI Evaluation
 	CreatedAt     time.Time            `json:"created_at"`	
 }
 
@@ -30,12 +30,12 @@ type Evaluation struct {
 	TechnologiesRating 		float32				`json:"technologiesRating"`
 	ProjectsRating			float32				`json:"projectsRating"`
 	CommunicationRating		float32				`json:"communicationRating"`
-	EvaluationItems			*[]EvaluationItems	`json:"evaluationItems"`
+	EvaluationItems			[]EvaluationItems	`gorm:"-" json:"evaluationItems"`
 }
 
 type EvaluationItems struct {
 	Question			string 			`json:"question"`
 	Answer 				string 			`json:"answer"`
 	Rating 				float32			`json:"rating"`
-	Guidelines 			[]string		`json:"guidelines"`
+	Guidelines 			[]string		`gorm:"-" json:"guidelines"`
 }
