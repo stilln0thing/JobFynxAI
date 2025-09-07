@@ -19,7 +19,7 @@ func (this *UploadController) SaveFile() gin.HandlerFunc {
 	return func(c *gin.Context){
 		file, err := c.FormFile("file")
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "no file is received"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No file is received"})
 			return
 		}
 		if filepath.Ext(file.Filename) != ".pdf"{
