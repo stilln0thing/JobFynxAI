@@ -2,6 +2,7 @@ package database
 
 import (
 	"time"
+
 	"github.com/stilln0thing/JobFynxAI/server/internal/models"
 	"gorm.io/gorm"
 )
@@ -17,44 +18,44 @@ func NewInterviewRepository() *interviewRepository {
 }
 
 func (r *interviewRepository) CreateInterview(id string, username string, resumePath string) (*models.Interview, error) {
-	query:= `INSERT INTO INTERVIEW(INTERVIEW ID, USER_ID, USERNAME, CREATED_AT, STATUS, RESUME_PATH) VALUES($1, $2, $3, $5, $6)`
+	query := `INSERT INTO INTERVIEWS(ID, USER_ID, USER_NAME, CREATED_AT, STATUS, RESUME_PATH) VALUES($1, $2, $3, $5, $6)`
 	interview := &models.Interview{
-		ID: 		id,
+		ID:         id,
 		UserID:     "4a059408-0a27-4ca3-88d9-ca5f82db5dda",
 		UserName:   username,
 		CreatedAt:  time.Now(),
-		Status:		"REGISTERED",
+		Status:     "REGISTERED",
 		ResumePath: resumePath,
 	}
 	tx := r.db.Exec(query, interview.ID, interview.UserID, interview.UserName, interview.CreatedAt, interview.Status, interview.ResumePath)
-	if tx.Error !=nil {
+	if tx.Error != nil {
 		return nil, tx.Error
 	}
 	return interview, nil
 }
 
-func (r *interviewRepository) GetAllInterviews() ([]*models.Interview, error){
-	query := `SELECT INTERVIEW_ID, USERNAME, DATE_TRUNC('second', CREATED_AT::timestamp), STATUS, RESUME_PATH FROM INTERVIEW ORDER BY CREATED_AT DESC`
+func (r *interviewRepository) GetAllInterviews() ([]*models.Interview, error) {
+	query := `SELECT ID, USER_NAME, DATE_TRUNC('second', CREATED_AT::timestamp), STATUS, RESUME_PATH FROM INTERVIEWS ORDER BY CREATED_AT DESC`
 	interviews := []*models.Interview{}
 	if err := r.db.Raw(query).Scan(&interviews).Error; err != nil {
-  		return nil, err
+		return nil, err
 	}
-	return interviews,nil
+	return interviews, nil
 }
 
-func (r *interviewRepository) GetInterview(id string) (*models.Interview, error){
-	query := `SELECT INTERVIEW_ID, USERNAME, DATE_TRUNC('second', CREATED_AT::timestamp), STATUS, RESUME_PATH, RESUME_SUMMARY, TRANSCRIPT, EVALUATION FROM INTERVIEW WHERE INTERVIEW_ID=$1`
+func (r *interviewRepository) GetInterview(id string) (*models.Interview, error) {
+	query := `SELECT INTERVIEW_ID, USERNAME, DATE_TRUNC('second', CREATED_AT::timestamp), STATUS, RESUME_PATH, RESUME_SUMMARY, TRANSCRIPT, EVALUATION FROM INTERVIEWS WHERE INTERVIEW_ID=$1`
 	var interview models.Interview
-	if err := r.db.Raw(query,id).Scan(&interview).Error; err != nil {
-  		return nil, err
+	if err := r.db.Raw(query, id).Scan(&interview).Error; err != nil {
+		return nil, err
 	}
-	return &interview,nil
+	return &interview, nil
 }
 
-func(r *interviewRepository) UpdateEvaluation(id string, evaluation *models.Evaluation) error {
-  tx := r.db.
-  Model(&models.Interview{}).
-  Where("interview_id = ?", id).
-  Update("evaluation", evaluation)  // GORM will json.Marshal internally
-return tx.Error
+func (r *interviewRepository) UpdateEvaluation(id string, evaluation *models.Evaluation) error {
+	tx := r.db.
+		Model(&models.Interview{}).
+		Where("interview_id = ?", id).
+		Update("evaluation", evaluation) // GORM will json.Marshal internally
+	return tx.Error
 }

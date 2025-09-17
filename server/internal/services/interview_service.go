@@ -73,7 +73,7 @@ func (i *InterviewService) EvaluateInterview(id string) (*models.Interview, erro
 	if err != nil {
 		return nil , err
 	}
-	interview.Evaluation = *evaluation
+	interview.Evaluation = evaluation
 	return interview, nil
 }
 

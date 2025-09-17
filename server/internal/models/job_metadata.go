@@ -2,6 +2,6 @@ package models
 
 type JobMetadata struct {
 	InterviewId   string          `json:"interviewId"`
-	ResumeSummary Resume         `json:"resume"`
+	ResumeSummary *Resume         `json:"resume"`
 	Questions     []QuestionPrep `gorm:"-" json:"questions"`
 }

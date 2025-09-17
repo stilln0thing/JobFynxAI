@@ -2,6 +2,7 @@ package models
 
 
 type Resume struct {
+	ID              string         `gorm:"primaryKey" json:"id"`
 	Name 	   		string         `json:"name" jsonschema_desc:"The name of the candidate"`
 	Projects 		[]Project      `gorm:"-" json:"projects" jsonschema_desc:"The projects done by the cadidate"`
 	Technologies    []string       `gorm:"-" json:"technologies" jsonschema_desc:"The technologies the candidate has worked on"` 
