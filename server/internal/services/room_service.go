@@ -53,3 +53,5 @@ func (r *RoomService) DeleteRoom(name string) error {
 	}
 	return nil
  }
+
+ // this is the room service
