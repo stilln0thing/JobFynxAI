@@ -3,10 +3,12 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
+import { AuthProvider } from "@/lib/auth-context"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
-  title: 'JobFynxAI',
-  description: 'JobFynxAI',
+  title: 'JobFynxAI — AI-Powered Mock Interviews',
+  description: 'Practice real-world interviews with AI-powered feedback. Boost your confidence and ace your next opportunity.',
   generator: 'JobFynxAI',
 }
 
@@ -28,7 +30,10 @@ html {
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <AuthProvider>
+            {children}
+            <Toaster richColors position="top-right" />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

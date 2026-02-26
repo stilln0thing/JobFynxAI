@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Dialog } from "@/components/ui/dialog"
 import { CheckCircle, Upload, FileText, Loader2, User, X } from "lucide-react"
 import { apiUpload, apiPost, apiDelete } from "@/lib/api"
+import { ProtectedRoute } from "@/components/protected-route"
 
 const instructions = [
   "Make sure you are using a stable internet connection to avoid disruptions.",
@@ -22,7 +23,7 @@ interface InterviewState {
   resumeSummary: string
 }
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter()
   const [interview, setInterview] = useState<InterviewState>({ id: "", name: "", resumeSummary: "" })
   const [submitted, setSubmitted] = useState(false)
@@ -224,5 +225,13 @@ export default function RegisterPage() {
         )}
       </Dialog>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <ProtectedRoute>
+      <RegisterContent />
+    </ProtectedRoute>
   )
 }

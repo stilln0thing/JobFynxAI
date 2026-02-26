@@ -5,6 +5,7 @@ import { useEffect, useState, useRef, Suspense } from "react"
 import { Button } from "@/components/ui/liquid-button"
 import { Card } from "@/components/ui/card"
 import { apiPost } from "@/lib/api"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Mic, MicOff, PhoneOff, Loader2, Bot, User, AlertCircle } from "lucide-react"
 
 function PlaygroundContent() {
@@ -196,12 +197,14 @@ function PlaygroundContent() {
 
 export default function PlaygroundPage() {
     return (
-        <Suspense fallback={
-            <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
-                <Loader2 className="w-12 h-12 text-purple-500 animate-spin" />
-            </div>
-        }>
-            <PlaygroundContent />
-        </Suspense>
+        <ProtectedRoute>
+            <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
+                    <Loader2 className="w-12 h-12 text-purple-500 animate-spin" />
+                </div>
+            }>
+                <PlaygroundContent />
+            </Suspense>
+        </ProtectedRoute>
     )
 }

@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/liquid-button"
 import { apiGet } from "@/lib/api"
+import { useAuth } from "@/lib/auth-context"
+import { ProtectedRoute } from "@/components/protected-route"
 import {
     Loader2, Plus, Calendar, User, CheckCircle2, Clock, AlertCircle,
-    ArrowRight, Bot
+    ArrowRight, Bot, LogOut
 } from "lucide-react"
 
 interface Interview {
@@ -18,8 +20,9 @@ interface Interview {
     resumePath: string
 }
 
-export default function DashboardPage() {
+function DashboardContent() {
     const router = useRouter()
+    const { user, logout } = useAuth()
     const [interviews, setInterviews] = useState<Interview[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
@@ -82,6 +85,11 @@ export default function DashboardPage() {
         }
     }
 
+    const handleLogout = () => {
+        logout()
+        router.push("/")
+    }
+
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
             {/* Header */}
@@ -94,12 +102,22 @@ export default function DashboardPage() {
                         JobFynxAI
                     </span>
                 </div>
-                <Button
-                    onClick={() => router.push("/register")}
-                    className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white"
-                >
-                    <Plus className="w-4 h-4 mr-2" /> New Interview
-                </Button>
+                <div className="flex items-center gap-4">
+                    {user && (
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Hi, <strong className="text-gray-900 dark:text-white">{user.username}</strong>
+                        </span>
+                    )}
+                    <Button
+                        onClick={() => router.push("/register")}
+                        className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white"
+                    >
+                        <Plus className="w-4 h-4 mr-2" /> New Interview
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={handleLogout}>
+                        <LogOut className="w-4 h-4 mr-1" /> Logout
+                    </Button>
+                </div>
             </nav>
 
             <div className="max-w-5xl mx-auto px-4 py-8">
@@ -173,5 +191,13 @@ export default function DashboardPage() {
                 )}
             </div>
         </div>
+    )
+}
+
+export default function DashboardPage() {
+    return (
+        <ProtectedRoute>
+            <DashboardContent />
+        </ProtectedRoute>
     )
 }
