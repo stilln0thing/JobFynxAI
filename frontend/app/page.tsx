@@ -2,13 +2,10 @@
 
 import { AuroraBackground } from "@/components/ui/aurora-background"
 import { Button } from "@/components/ui/liquid-button"
-import { Spotlight } from "@/components/ui/spotlight-new"
-import { ArrowRight, Sparkles, Target, Zap, Users, CheckCircle, Moon, Mic, Star, BookOpen, Bot } from "lucide-react"
-import Link from "next/link"
+import { ArrowRight, Target, Zap, Users, CheckCircle, Moon, Mic, Star, BookOpen, Bot } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Typewriter } from "react-simple-typewriter"
-import RegisterPage from "./register/page"
 
 export default function LandingPage() {
   const { theme, setTheme } = useTheme()
@@ -24,7 +21,8 @@ export default function LandingPage() {
     window.location.href = "/register"
   }
   const handleDemo = () => {
-    window.open("yt link daal idhar bc", "_blank")
+    // TODO: Add actual demo video link
+    window.open("https://youtube.com", "_blank")
   }
 
   return (
@@ -40,11 +38,17 @@ export default function LandingPage() {
                 <Bot className="w-7 h-7 text-black dark:text-white" />
               </div>
             </div>
-            <span className="ml-2 text-4xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent drop-shadow-lg select-none" style={{letterSpacing: "-0.03em"}}>
-              Job<span className="text-gray-900 dark:text-white">Fix</span><span className="text-orange-400">AI</span>
+            <span className="ml-2 text-4xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent drop-shadow-lg select-none" style={{ letterSpacing: "-0.03em" }}>
+              Job<span className="text-gray-900 dark:text-white">Fynx</span><span className="text-orange-400">AI</span>
             </span>
           </div>
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-6">
+            <a href="/dashboard" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
+              Dashboard
+            </a>
+            <a href="/register" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
+              New Interview
+            </a>
             {mounted && (
               <button
                 aria-label="Toggle dark mode"
@@ -147,7 +151,7 @@ export default function LandingPage() {
 
         {/* Why Choose JobFixAI Section */}
         <section className="max-w-3xl mx-auto mb-16 px-4">
-          <h2 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">Why Choose JobFixAI?</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">Why Choose JobFynxAI?</h2>
           <ul className="flex flex-col gap-6 items-start md:items-center">
             <li className="flex items-start gap-3">
               <span className="mt-1"><CheckCircle className="w-6 h-6 text-purple-500" /></span>
@@ -172,7 +176,7 @@ export default function LandingPage() {
         <footer className="w-full border-t border-gray-200 dark:border-zinc-800 py-8 bg-white/80 dark:bg-zinc-900/80">
           <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">JobFixAI</span>
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">JobFynxAI</span>
               <span className="text-xs text-gray-500">© {new Date().getFullYear()} All rights reserved.</span>
             </div>
             <div className="flex gap-6 text-sm text-gray-500 dark:text-gray-400">
